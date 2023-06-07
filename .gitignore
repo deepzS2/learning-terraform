@@ -11,3 +11,6 @@ azure-credentials.sh
 
 aws-key
 aws-key.pub
+
+azure-key
+azure-key.pub
