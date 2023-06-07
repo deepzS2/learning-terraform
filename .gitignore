@@ -8,3 +8,6 @@
 
 aws-credentials.sh
 azure-credentials.sh
+
+aws-key
+aws-key.pub
