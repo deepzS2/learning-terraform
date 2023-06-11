@@ -65,27 +65,27 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   provisioner "file" {
-    content = "public_ip: ${self.public_ip_address}"
+    content     = "public_ip: ${self.public_ip_address}"
     destination = "/tmp/public_ip.txt"
   }
 
   provisioner "file" {
-    source = "./test"
+    source      = "./test"
     destination = "/tmp"
   }
 
   connection {
-    type = "ssh"
-    user = "ubuntu"
+    type        = "ssh"
+    user        = "ubuntu"
     private_key = file("./azure-key")
-    host = self.public_ip_address
+    host        = self.public_ip_address
   }
 
   provisioner "remote-exec" {
-    inline = [ 
+    inline = [
       "echo location: ${var.location} >> /tmp/location.txt",
       "echo subnet_id: ${data.terraform_remote_state.vnet.outputs.subnet_id} >> /tmp/subnet_id.txt"
-     ]
+    ]
   }
 
   tags = local.common_tags

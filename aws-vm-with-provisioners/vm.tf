@@ -16,27 +16,27 @@ resource "aws_instance" "vm" {
   }
 
   provisioner "file" {
-    content = "public_ip: ${self.public_ip}"
+    content     = "public_ip: ${self.public_ip}"
     destination = "/tmp/public_ip.txt"
   }
 
   provisioner "file" {
-    source = "./test.txt"
+    source      = "./test.txt"
     destination = "/tmp/example.txt"
   }
 
   connection {
-    type = "ssh"
-    user = "ubuntu"
+    type        = "ssh"
+    user        = "ubuntu"
     private_key = file("./aws-key")
-    host = self.public_ip
+    host        = self.public_ip
   }
 
   provisioner "remote-exec" {
-    inline = [ 
+    inline = [
       "echo ${self.ami} >> /tmp/ami.txt",
       "echo private_ip: ${self.private_ip}"
-     ]
+    ]
   }
 
   tags = {
